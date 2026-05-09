@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aarvines Jewells — Diamond Collection</title>
+<meta name="description" content="Aarvines Jewells — Fine diamond rings. 573, Sector 27, Gurgaon. +91 96673 30138">
+<meta property="og:title" content="Aarvines Jewells — Diamond Collection">
+<meta property="og:description" content="Explore our curated diamond ring collection. All prices transparent.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8D08A;--gold-pale:#F5EDD0;--gold-d:#8B6914;
+  --ink:#1C1710;--brown:#3D2F1E;--warm:#6B5744;
+  --cream:#FAF7F2;--ivory:#F2EDE3;--white:#fff;
+  --border:rgba(201,168,76,0.22);--border2:rgba(28,23,16,0.1);
+  --shadow:0 4px 24px rgba(28,23,16,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);}
+
+/* LOADING */
+.loading-screen{
+  position:fixed;inset:0;background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:999;transition:opacity .5s;
+}
+.loading-screen.hide{opacity:0;pointer-events:none;}
+.loading-logo{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:#fff;letter-spacing:4px;margin-bottom:20px;}
+.loading-logo em{color:var(--gold-l);font-style:italic;}
+.loading-bar{width:180px;height:1px;background:rgba(255,255,255,.15);position:relative;overflow:hidden;}
+.loading-bar::after{content:'';position:absolute;inset:0;background:var(--gold);animation:loadbar 1.2s ease infinite;}
+@keyframes loadbar{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* HEADER */
+.hdr{background:var(--ink);padding:44px 24px 36px;text-align:center;position:relative;overflow:hidden;}
+.hdr::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(201,168,76,.22) 0%,transparent 70%);pointer-events:none;}
+.hdr-eyebrow{font-size:9px;letter-spacing:6px;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:10px;position:relative;}
+.hdr h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,7vw,60px);font-weight:300;color:#fff;letter-spacing:3px;line-height:1;position:relative;}
+.hdr h1 em{color:var(--gold-l);font-style:italic;}
+.hdr-sub{margin-top:10px;font-size:9px;letter-spacing:5px;color:rgba(255,255,255,.3);text-transform:uppercase;position:relative;}
+.hdr-line{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:18px auto 0;position:relative;}
+
+/* TICKER */
+.ticker{background:var(--gold-pale);border-bottom:1px solid var(--border);padding:9px 16px;display:flex;gap:20px;flex-wrap:wrap;justify-content:center;font-size:10px;letter-spacing:1px;color:var(--brown);}
+.ticker b{color:var(--gold-d);}
+.tick-item{display:flex;align-items:center;gap:5px;}
+.tick-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* TOOLBAR */
+.toolbar{background:var(--white);border-bottom:1px solid var(--border2);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow);}
+.filters{display:flex;gap:5px;flex-wrap:wrap;}
+.fbtn{padding:5px 14px;border:1px solid var(--border);background:transparent;color:var(--warm);font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;}
+.fbtn:hover,.fbtn.active{background:var(--ink);border-color:var(--ink);color:var(--gold-l);}
+.toolbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.sort-sel{padding:6px 28px 6px 10px;border:1px solid var(--border);border-radius:2px;background:var(--ivory);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:1px;color:var(--warm);outline:none;cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22%3E%3Cpath d=%22M0 0l5 6 5-6z%22 fill=%22%236B5744%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 8px center;}
+.srch{position:relative;min-width:140px;max-width:220px;}
+.srch input{width:100%;padding:7px 10px 7px 28px;border:1px solid var(--border);border-radius:2px;background:var(--ivory);font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);outline:none;}
+.srch input:focus{border-color:var(--gold);}
+.srch-icon{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;opacity:.35;pointer-events:none;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px;padding:2px;max-width:1400px;margin:0 auto;}
+.empty-state{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--warm);}
+.empty-state .es-icon{font-size:48px;margin-bottom:16px;opacity:.2;}
+
+/* CARD */
+.card{background:var(--white);position:relative;overflow:hidden;cursor:pointer;transition:transform .22s,box-shadow .22s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(28,23,16,.13);z-index:2;}
+.card-img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--ivory);}
+.badge-new,.badge-sold{position:absolute;font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;font-family:'DM Sans',sans-serif;font-weight:600;}
+.badge-new{top:10px;left:10px;background:var(--gold);color:var(--ink);}
+.badge-sold{top:10px;right:10px;background:var(--ink);color:#fff;}
+.card-body{padding:14px 16px 16px;}
+.card-cat{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-d);margin-bottom:3px;font-weight:500;}
+.card-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;line-height:1.2;margin-bottom:8px;}
+.card-specs{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px;}
+.spec{background:var(--ivory);color:var(--warm);font-size:8px;padding:2px 7px;border-radius:1px;letter-spacing:.5px;}
+.pbreakdown{background:var(--ivory);border-radius:2px;padding:9px 11px;margin-bottom:10px;font-size:9px;color:var(--warm);line-height:2;}
+.pbrow{display:flex;justify-content:space-between;align-items:center;}
+.pbrow.ptotal{font-size:10px;font-weight:600;color:var(--ink);border-top:1px solid var(--border);margin-top:2px;padding-top:3px;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);}
+.cprice{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--gold-d);}
+.ccode{font-size:8px;color:var(--warm);letter-spacing:1px;}
+.wa-btn{display:block;width:100%;margin-top:10px;background:var(--ink);color:var(--gold-l);font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;text-align:center;padding:9px;border:none;cursor:pointer;border-radius:2px;transition:background .2s;}
+.wa-btn:hover{background:var(--gold-d);color:#fff;}
+.wa-btn.sold{background:#bbb;cursor:default;}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(28,23,16,.9);z-index:200;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px);}
+.overlay.open{display:flex;}
+.modal{background:#fff;max-width:560px;width:100%;max-height:92vh;overflow-y:auto;animation:mIn .28s ease;position:relative;}
+@keyframes mIn{from{opacity:0;transform:scale(.96) translateY(14px)}to{opacity:1;transform:none}}
+.modal-close{position:sticky;top:0;left:100%;float:right;width:40px;height:40px;background:var(--ink);color:#fff;border:none;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;}
+.modal-img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--ivory);}
+.modal-body{padding:22px 22px 20px;}
+.modal-cat{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-d);margin-bottom:4px;font-weight:500;}
+.modal-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin-bottom:3px;line-height:1.1;}
+.modal-id{font-size:8px;color:var(--warm);letter-spacing:2px;margin-bottom:16px;}
+.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--ivory);padding:13px;margin-bottom:14px;}
+.ms-item .ms-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);margin-bottom:1px;}
+.ms-item .ms-val{font-size:13px;color:var(--ink);}
+.price-tbl{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:12px;}
+.price-tbl tr{border-bottom:1px solid var(--border);}
+.price-tbl td{padding:8px 4px;color:var(--brown);}
+.price-tbl td:last-child{text-align:right;font-weight:500;}
+.price-tbl td:nth-child(2){font-size:10px;color:var(--warm);}
+.price-tbl tr.total-row td{font-weight:700;font-size:13px;color:var(--ink);border-top:2px solid var(--gold);}
+.price-tbl tr.gst-row td{color:var(--warm);font-size:10px;font-style:italic;}
+.price-tbl tr.grand-row td{background:var(--gold-pale);}
+.price-tbl tr.grand-row td:last-child{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-d);font-weight:600;}
+.modal-notes{font-size:12px;color:var(--warm);line-height:1.7;margin-bottom:14px;font-style:italic;}
+
+/* FOOTER */
+.footer{background:var(--ink);color:rgba(255,255,255,.35);text-align:center;padding:40px 20px 32px;margin-top:2px;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--gold-l);letter-spacing:5px;margin-bottom:16px;}
+.footer-brand em{font-style:italic;}
+.footer-divider{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 16px;}
+.footer-details{font-size:10px;letter-spacing:2px;line-height:2.4;text-transform:uppercase;}
+.footer-details a{color:var(--gold);text-decoration:none;}
+.footer-details a:hover{color:var(--gold-l);}
+.footer-gstin{margin-top:10px;font-size:8px;letter-spacing:3px;opacity:.4;}
+.footer-copy{margin-top:16px;font-size:8px;opacity:.25;letter-spacing:2px;}
+
+@media(max-width:580px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+  .cprice{font-size:20px;}
+  .modal-specs{grid-template-columns:1fr;}
+  .toolbar{gap:6px;}
+  .toolbar-right{flex:1;justify-content:flex-end;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-screen" id="loadScreen">
+  <div class="loading-logo">Aarvines <em>Jewells</em></div>
+  <div class="loading-bar"></div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-eyebrow">Diamond Collection &middot; 2025</div>
+  <h1>Aarvines <em>Jewells</em></h1>
+  <div class="hdr-sub">Sector 27, Gurgaon</div>
+  <div class="hdr-line"></div>
+</div>
+
+<!-- RATE TICKER -->
+<div class="ticker" id="ticker"><div class="tick-item"><div class="tick-dot"></div><span>Loading rates&hellip;</span></div></div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="filters" id="filterBar">
+    <button class="fbtn active" onclick="setFilter('all',this)">All</button>
+    <button class="fbtn" onclick="setFilter('ring',this)">Rings</button>
+  </div>
+  <div class="toolbar-right">
+    <select class="sort-sel" id="sortSel" onchange="render()">
+      <option value="default">Sort: Default</option>
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+    </select>
+    <div class="srch">
+      <span class="srch-icon">&#128269;</span>
+      <input type="text" id="srch" placeholder="Search&hellip;" oninput="render()">
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">Aarvines <em>Jewells</em></div>
+  <div class="footer-divider"></div>
+  <div class="footer-details">
+    573, Sector 27, Gurgaon &mdash; Haryana 122002<br>
+    <a href="tel:+919667330138">+91 96673 30138</a>
+    &nbsp;&middot;&nbsp;
+    <a href="mailto:info@aarvinesjewells.com">info@aarvinesjewells.com</a>
+  </div>
+  <div class="footer-gstin">GSTIN: 06ABDCA8515B1Z3</div>
+  <div class="footer-copy">All prices inclusive of 3% GST &middot; Subject to availability &middot; &copy; 2025 Aarvines Jewells</div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="overlay" id="overlay" onclick="closeOverlay(event)">
+  <div style="position:relative;">
+    <div class="modal" id="modal">
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      <img src="" alt="" class="modal-img" id="mImg">
+      <div class="modal-body">
+        <div class="modal-cat" id="mCat"></div>
+        <div class="modal-name" id="mName"></div>
+        <div class="modal-id" id="mId"></div>
+        <div class="modal-specs" id="mSpecs"></div>
+        <table class="price-tbl" id="mTbl"></table>
+        <div class="modal-notes" id="mNotes"></div>
+        <a href="#" class="wa-btn" id="mWA" target="_blank">&#128242; Enquire on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var RATES = {};
+var pieces = [];
+var currentFilter = 'all';
+
+// ── LOAD DATA ──
+Promise.all([
+  fetch('rates.json').then(r => r.json()),
+  fetch('pieces.json').then(r => r.json())
+]).then(function(results) {
+  RATES  = results[0];
+  pieces = results[1];
+  render();
+  updateTicker();
+  // Hide loading screen
+  setTimeout(function() {
+    document.getElementById('loadScreen').classList.add('hide');
+    setTimeout(function(){ document.getElementById('loadScreen').style.display='none'; }, 500);
+  }, 600);
+}).catch(function(e) {
+  console.error('Failed to load data:', e);
+  document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="es-icon">⚠️</div><p>Failed to load catalogue. Please refresh.</p></div>';
+});
+
+// ── PRICING ──
+function calcPrice(p) {
+  var g  = p.netWt  * RATES.gold;
+  var l  = p.netWt  * RATES.labour;
+  var d  = p.diaWt  * RATES.diamond;
+  var s  = (p.stoneWt || 0) * RATES.stone;
+  var sub = g + l + d + s;
+  var gstAmt = sub * (RATES.gst / 100);
+  var total  = sub + gstAmt;
+  return { g:g, l:l, d:d, s:s, sub:sub, gstAmt:gstAmt, total:total };
+}
+function fmt(n) { return '\u20b9' + Math.round(n).toLocaleString('en-IN'); }
+
+// ── FILTER / SORT / RENDER ──
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.fbtn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  var q   = (document.getElementById('srch').value || '').toLowerCase();
+  var srt = document.getElementById('sortSel').value;
+  var grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  var vis = pieces.filter(function(p) {
+    var mc = currentFilter === 'all' || p.category === currentFilter;
+    var mq = !q || p.name.toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
+    return mc && mq;
+  });
+
+  if (srt === 'price_asc')  vis.sort(function(a,b){ return calcPrice(a).total - calcPrice(b).total; });
+  if (srt === 'price_desc') vis.sort(function(a,b){ return calcPrice(b).total - calcPrice(a).total; });
+
+  if (!vis.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="es-icon">&#128142;</div><p style="font-size:14px;letter-spacing:1px;">No pieces found</p></div>';
+    return;
+  }
+
+  // Update All button count
+  document.querySelector('.fbtn').textContent = 'All (' + pieces.length + ')';
+
+  vis.forEach(function(p) {
+    var c = calcPrice(p);
+    var waMsg = encodeURIComponent("Hi! I'm interested in *" + p.name + "* (" + p.id + ") priced at *" + fmt(c.total) + "*. Is it still available?");
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    var stoneRow = p.stoneWt ? '<div class="pbrow"><span>Emerald (' + p.stoneWt + 'ct &times; \u20b9' + RATES.stone.toLocaleString('en-IN') + ')</span><span>' + fmt(c.s) + '</span></div>' : '';
+    var stoneBadge = p.stoneWt ? '<span class="spec">&#129001; ' + p.stoneWt + 'ct emerald</span>' : '';
+    var waBtn = p.available
+      ? '<a href="https://wa.me/' + RATES.wa + '?text=' + waMsg + '" class="wa-btn" target="_blank">&#128242; Enquire on WhatsApp</a>'
+      : '<div class="wa-btn sold">&#10005; Sold</div>';
+
+    card.innerHTML =
+      '<img src="' + p.image + '" class="card-img" alt="' + p.name + '" loading="lazy">'
+      + (p.isNew && p.available ? '<div class="badge-new">New</div>' : '')
+      + (!p.available ? '<div class="badge-sold">Sold</div>' : '')
+      + '<div class="card-body">'
+      + '<div class="card-cat">' + p.catLabel + '</div>'
+      + '<div class="card-name">' + p.name + '</div>'
+      + '<div class="card-specs">'
+      + '<span class="spec">' + p.metal + '</span>'
+      + '<span class="spec">' + p.netWt + 'g</span>'
+      + '<span class="spec">&#128142; ' + p.diaWt + 'ct</span>'
+      + stoneBadge
+      + '</div>'
+      + '<div class="pbreakdown">'
+      + '<div class="pbrow"><span>Gold (' + p.netWt + 'g)</span><span>' + fmt(c.g) + '</span></div>'
+      + '<div class="pbrow"><span>Labour (' + p.netWt + 'g)</span><span>' + fmt(c.l) + '</span></div>'
+      + '<div class="pbrow"><span>Diamond (' + p.diaWt + 'ct)</span><span>' + fmt(c.d) + '</span></div>'
+      + stoneRow
+      + '<div class="pbrow"><span>GST (' + RATES.gst + '%)</span><span>' + fmt(c.gstAmt) + '</span></div>'
+      + '<div class="pbrow ptotal"><span>Total</span><span>' + fmt(c.total) + '</span></div>'
+      + '</div>'
+      + '<div class="card-footer"><div class="cprice">' + fmt(c.total) + '</div><div class="ccode">' + p.id + '</div></div>'
+      + waBtn
+      + '</div>';
+
+    card.querySelector('.card-img').addEventListener('click', function(){ openModal(p); });
+    card.querySelector('.card-name').addEventListener('click', function(){ openModal(p); });
+    grid.appendChild(card);
+  });
+}
+
+function updateTicker() {
+  var avail = pieces.filter(function(p){ return p.available; }).length;
+  document.getElementById('ticker').innerHTML =
+    '<div class="tick-item"><div class="tick-dot"></div><span>Gold <b>\u20b9' + Number(RATES.gold).toLocaleString('en-IN') + '/g</b></span></div>'
+    + '<div class="tick-item"><div class="tick-dot"></div><span>Diamond <b>\u20b9' + Number(RATES.diamond).toLocaleString('en-IN') + '/ct</b></span></div>'
+    + '<div class="tick-item"><div class="tick-dot"></div><span>Labour <b>\u20b9' + Number(RATES.labour).toLocaleString('en-IN') + '/g</b></span></div>'
+    + '<div class="tick-item"><div class="tick-dot"></div><span>GST <b>' + RATES.gst + '%</b></span></div>'
+    + '<div class="tick-item"><div class="tick-dot"></div><span><b>' + avail + '</b> available</span></div>';
+}
+
+// ── MODAL ──
+function openModal(p) {
+  var c = calcPrice(p);
+  document.getElementById('mImg').src   = p.image;
+  document.getElementById('mCat').textContent   = p.catLabel;
+  document.getElementById('mName').textContent  = p.name;
+  document.getElementById('mId').textContent    = 'Code: ' + p.id;
+  document.getElementById('mNotes').textContent = p.notes || '';
+
+  var specItems = [
+    {l:'Metal', v:p.metal}, {l:'Net Weight', v:p.netWt+'g'},
+    {l:'Diamond', v:p.diaWt+'ct'}, {l:'Finish', v:p.finish},
+    {l:'Status', v:p.available?'\u2713 Available':'\u2715 Sold'}
+  ];
+  if (p.stoneWt) specItems.push({l:'Emerald', v:p.stoneWt+'ct'});
+  document.getElementById('mSpecs').innerHTML = specItems.map(function(d){
+    return '<div class="ms-item"><div class="ms-lbl">'+d.l+'</div><div class="ms-val">'+d.v+'</div></div>';
+  }).join('');
+
+  var stR = p.stoneWt ? '<tr><td>Emerald</td><td>'+p.stoneWt+'ct \u00d7 \u20b9'+RATES.stone.toLocaleString('en-IN')+'</td><td>'+fmt(c.s)+'</td></tr>' : '';
+  document.getElementById('mTbl').innerHTML =
+    '<tr><td>Gold</td><td>'+p.netWt+'g \u00d7 \u20b9'+RATES.gold.toLocaleString('en-IN')+'</td><td>'+fmt(c.g)+'</td></tr>'
+    +'<tr><td>Labour</td><td>'+p.netWt+'g \u00d7 \u20b9'+RATES.labour.toLocaleString('en-IN')+'</td><td>'+fmt(c.l)+'</td></tr>'
+    +'<tr><td>Diamond</td><td>'+p.diaWt+'ct \u00d7 \u20b9'+RATES.diamond.toLocaleString('en-IN')+'</td><td>'+fmt(c.d)+'</td></tr>'
+    +stR
+    +'<tr class="total-row"><td colspan="2">Subtotal</td><td>'+fmt(c.sub)+'</td></tr>'
+    +'<tr class="gst-row"><td colspan="2">GST ('+RATES.gst+'%)</td><td>'+fmt(c.gstAmt)+'</td></tr>'
+    +'<tr class="grand-row"><td colspan="2"><b>Sale Price</b></td><td><b>'+fmt(c.total)+'</b></td></tr>';
+
+  var waMsg = encodeURIComponent("Hi! I'm interested in *"+p.name+"* ("+p.id+") priced at *"+fmt(c.total)+"*. Is it still available?");
+  document.getElementById('mWA').href = 'https://wa.me/' + RATES.wa + '?text=' + waMsg;
+
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeOverlay(e){ if(e.target.id==='overlay') closeModal(); }
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); document.body.style.overflow=''; }
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+</script>
+</body>
+</html>
