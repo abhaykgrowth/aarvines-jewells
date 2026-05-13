@@ -132,7 +132,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);}
 </div>
 <script>
 var WA="919667330138";
-var RATES={gold:9700,labour:1500,diamond:18000,stone:1000,gst:3};
+var RATES={
+  gold24k: 16837,   // 24K base rate per gram (update this daily)
+  labour:  1500,
+  diamond: 18000,
+  stone:   1000,
+  gst:     3,
+  wa:      "919667330138",
+  // Wastage-adjusted multipliers (your actual trade rates incl. wastage)
+  karatMap: {
+    "24K": 1.00,   // 100%
+    "22K": 0.93,   // 93% incl. wastage
+    "18K": 0.76,   // 76% incl. wastage
+    "14K": 0.60,   // 60% incl. wastage
+    "14KT":0.60,
+    "9K":  0.42,   // 42% incl. wastage
+  }
+};
+// Auto-detect karat from metal string and return gold rate per gram
+function goldRate(metalStr) {
+  if (!metalStr) return RATES.gold24k * 0.60; // default 14K with wastage
+  var s = metalStr.toUpperCase();
+  if (s.includes("24")) return RATES.gold24k * RATES.karatMap["24K"];
+  if (s.includes("22")) return RATES.gold24k * RATES.karatMap["22K"];
+  if (s.includes("18")) return RATES.gold24k * RATES.karatMap["18K"];
+  if (s.includes("14")) return RATES.gold24k * RATES.karatMap["14K"];
+  if (s.includes("9K") || s.includes("9KT")) return RATES.gold24k * RATES.karatMap["9K"];
+  return RATES.gold24k * 0.60; // fallback 14K with wastage
+}
 
 const pieces = [
   {
@@ -682,9 +709,10 @@ const pieces = [
 ];
 
 function calcPrice(p){
-  var g=p.netWt*RATES.gold,l=p.netWt*RATES.labour,d=p.diaWt*RATES.diamond,s=(p.stoneWt||0)*RATES.stone;
+  var rate=goldRate(p.metal);
+  var g=p.netWt*rate,l=p.netWt*RATES.labour,d=p.diaWt*RATES.diamond,s=(p.stoneWt||0)*RATES.stone;
   var sub=g+l+d+s,gstAmt=sub*(RATES.gst/100),total=sub+gstAmt;
-  return {g:g,l:l,d:d,s:s,sub:sub,gstAmt:gstAmt,total:total};
+  return {g:g,l:l,d:d,s:s,sub:sub,gstAmt:gstAmt,total:total,rate:rate};
 }
 function fmt(n){return "₹"+Math.round(n).toLocaleString("en-IN");}
 var currentFilter="all";
@@ -749,7 +777,7 @@ function render(){
       +stoneBadge
       +'</div>'
       +'<div class="pbreakdown">'
-      +'<div class="pbrow"><span>Gold ('+p.netWt+'g &times; ₹'+RATES.gold.toLocaleString("en-IN")+')</span><span>'+fmt(c.g)+'</span></div>'
+      +'<div class="pbrow"><span>Gold '+p.metal+' ('+p.netWt+'g)</span><span>'+fmt(c.g)+'</span></div>'
       +'<div class="pbrow"><span>Labour ('+p.netWt+'g &times; ₹'+RATES.labour.toLocaleString("en-IN")+')</span><span>'+fmt(c.l)+'</span></div>'
       +'<div class="pbrow"><span>Diamond ('+p.diaWt+'ct &times; ₹'+RATES.diamond.toLocaleString("en-IN")+')</span><span>'+fmt(c.d)+'</span></div>'
       +stoneRow
@@ -768,7 +796,7 @@ function render(){
 function updateTicker(vis){
   var avail=(vis||pieces).filter(function(p){return p.available;}).length;
   document.getElementById("ticker").innerHTML=
-    '<div class="tick-item"><div class="tick-dot"></div><span>Gold <b>₹'+RATES.gold.toLocaleString("en-IN")+'/g</b></span></div>'
+    '<div class="tick-item"><div class="tick-dot"></div><span>14K <b>₹'+Math.round(RATES.gold24k*0.60).toLocaleString("en-IN")+'/g</b></span></div>'
     +'<div class="tick-item"><div class="tick-dot"></div><span>Diamond <b>₹'+RATES.diamond.toLocaleString("en-IN")+'/ct</b></span></div>'
     +'<div class="tick-item"><div class="tick-dot"></div><span>Labour <b>₹'+RATES.labour.toLocaleString("en-IN")+'/g</b></span></div>'
     +'<div class="tick-item"><div class="tick-dot"></div><span>GST <b>'+RATES.gst+'%</b></span></div>'
@@ -792,7 +820,7 @@ function openModal(p){
   }).join("");
   var stoneRow2=p.stoneWt?'<tr><td>Emerald</td><td>'+p.stoneWt+'ct × ₹'+RATES.stone.toLocaleString("en-IN")+'</td><td>'+fmt(c.s)+'</td></tr>':"";
   document.getElementById("mTbl").innerHTML=
-    '<tr><td>Gold</td><td>'+p.netWt+'g × ₹'+RATES.gold.toLocaleString("en-IN")+'</td><td>'+fmt(c.g)+'</td></tr>'
+    '<tr><td>Gold ('+p.metal+')</td><td>'+p.netWt+'g × ₹'+Math.round(goldRate(p.metal)).toLocaleString("en-IN")+'</td><td>'+fmt(c.g)+'</td></tr>'
     +'<tr><td>Labour</td><td>'+p.netWt+'g × ₹'+RATES.labour.toLocaleString("en-IN")+'</td><td>'+fmt(c.l)+'</td></tr>'
     +'<tr><td>Diamond</td><td>'+p.diaWt+'ct × ₹'+RATES.diamond.toLocaleString("en-IN")+'</td><td>'+fmt(c.d)+'</td></tr>'
     +stoneRow2
